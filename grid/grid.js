@@ -31,32 +31,34 @@ module.exports.Grid = (function() {
 
   // for now assumes that entities have no width/height
   Grid.prototype.add = function(entity) {
-    var columnX = Math.floor(entity.x / this.gridSize);
-    var rowY = Math.floor(entity.y / this.gridSize);
+    var columnX = getGridValue(entity.x, this.gridSize);
+    var rowY = getGridValue(entity.y, this.gridSize);
 
-    var column = findOrAddColumn(this.columns, columnX);
-    var tile = findOrAddTile(column.tiles, rowY);
-    tile.data.push(entity);
+    addEntity(entity, this.columns, columnX, rowY)
 
-    var widthColumnX = Math.floor((entity.x + entity.width) / this.gridSize);
+    var widthColumnX = getGridValue(entity.x + entity.width, this.gridSize);
     if (widthColumnX !== columnX) {
-      var column = findOrAddColumn(this.columns, widthColumnX);
-      var tile = findOrAddTile(column.tiles, rowY);
-      tile.data.push(entity);
+      addEntity(entity, this.columns, widthColumnX, rowY)
     }
 
-    var heightRowY = Math.floor((entity.y + entity.height) / this.gridSize);
+    var heightRowY = getGridValue(entity.y + entity.height, this.gridSize);
     if (heightRowY !== rowY) {
-      var column = findOrAddColumn(this.columns, columnX);
-      var tile = findOrAddTile(column.tiles, heightRowY);
-      tile.data.push(entity);
+      addEntity(entity, this.columns, columnX, heightRowY)
     }
 
     if (widthColumnX !== columnX && heightRowY !== rowY) {
-      var column = findOrAddColumn(this.columns, widthColumnX);
-      var tile = findOrAddTile(column.tiles, heightRowY);
-      tile.data.push(entity);
+      addEntity(entity, this.columns, widthColumnX, heightRowY)
     }
+  }
+
+  function getGridValue(actualX, gridSize) {
+    return Math.floor(actualX / gridSize)
+  }
+
+  function addEntity(entity, columns, x, y) {
+    var column = findOrAddColumn(columns, x);
+    var tile = findOrAddTile(column.tiles, y);
+    tile.data.push(entity);
   }
 
   /*
