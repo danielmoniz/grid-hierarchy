@@ -1,4 +1,6 @@
 
+// @TODO Use LinkedList instead of array. Splicing items into an array is (surely?) be less efficient than inserting into a LinkedList, especially if iteration is already performed.
+
 module.exports.Grid = (function() {
   function Grid(gridSize, zeroes) {
     this.gridSize = gridSize || 1
@@ -24,6 +26,7 @@ module.exports.Grid = (function() {
         return tile.data;
       }
     }
+    return []
   }
 
   // for now assumes that entities have no width/height
@@ -34,6 +37,26 @@ module.exports.Grid = (function() {
     var column = findOrAddColumn(this.columns, columnX);
     var tile = findOrAddTile(column.tiles, rowY);
     tile.data.push(entity);
+
+    var widthColumnX = Math.floor((entity.x + entity.width) / this.gridSize);
+    if (widthColumnX !== columnX) {
+      var column = findOrAddColumn(this.columns, widthColumnX);
+      var tile = findOrAddTile(column.tiles, rowY);
+      tile.data.push(entity);
+    }
+
+    var heightRowY = Math.floor((entity.y + entity.height) / this.gridSize);
+    if (heightRowY !== rowY) {
+      var column = findOrAddColumn(this.columns, columnX);
+      var tile = findOrAddTile(column.tiles, heightRowY);
+      tile.data.push(entity);
+    }
+
+    if (widthColumnX !== columnX && heightRowY !== rowY) {
+      var column = findOrAddColumn(this.columns, widthColumnX);
+      var tile = findOrAddTile(column.tiles, heightRowY);
+      tile.data.push(entity);
+    }
   }
 
   /*
