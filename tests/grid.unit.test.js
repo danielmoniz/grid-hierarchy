@@ -1,5 +1,5 @@
 
-var Grid = require('grid').grid;
+var Grid = require('grid').Grid;
 
 console.log(Grid);
 

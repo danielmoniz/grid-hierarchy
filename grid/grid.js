@@ -1,32 +1,79 @@
 
-module.exports.grid = (function() {
+module.exports.Grid = (function() {
   function Grid(gridSize, zeroes) {
     this.gridSize = gridSize || 1
     this.data = {};
     this.zeroesInKey = zeroes || 0;
+    this.columns = []
   }
 
   /*
-   * Return the position in the grid. If it does not exist,
-   * return an empty array.
+   * Return the tile at a position in the grid.
+   * If it does not exist, return an empty array.
    */
   Grid.prototype.get = function(x, y) {
-    if (!this.data[x]) { return [] }
-    return this.data[x][y] || []
+    for (var i = 0; i < this.columns.length; i++) {
+      var column = this.columns[i];
+      if (column.x > x) { return [] }
+      if (column.x < x) { continue }
+
+      for (var j = 0; j < column.length; j++) {
+        var tile = column[j];
+        if (tile.y > y) { return [] }
+        if (tile.y < y) { continue }
+        return tile;
+      }
+    }
   }
 
   // for now assumes that entities have no width/height
   Grid.prototype.add = function(entity) {
-    var column = Math.floor(entity.x / this.gridSize);
-    var row = Math.floor(entity.y / this.gridSize);
+    var columnX = Math.floor(entity.x / this.gridSize);
+    var rowY = Math.floor(entity.y / this.gridSize);
 
-    if (this.data[column] === undefined) {
-      this.data[column] = {};
+    var correctColumn;
+    for (var i = 0; i < this.columns.length + 1; i++) {
+      console.log('searching for column at', i);
+      var column = this.columns[i];
+      if (column === undefined || column.x > columnX) {
+        // add column as previous item in array
+        correctColumn = getNewColumn(columnX);
+        this.columns.splice(i, 0, correctColumn);
+        break;
+      } else if (column.x === columnX) {
+        correctColumn = column;
+        break;
+      }
     }
-    if (this.data[column][row] === undefined) {
-      this.data[column][row] = [];
+
+    var correctTile;
+    for (var j = 0; j < correctColumn.length + 1; j++) {
+      console.log('searching for tile at', j);
+      var tile = correctColumn[j];
+      if (tile === undefined || tile.y > rowY) {
+        // add new tile before this point
+        correctTile = getNewTile(rowY);
+        correctColumn.splice(j, 0, correctTile);
+        break;
+      } else if (tile.y === rowY) {
+        correctTile = tile;
+        break;
+      }
     }
-    this.data[column][row].push(entity);
+
+    correctTile.push(entity);
+  }
+
+  function getNewColumn(x) {
+    var column = [];
+    column.x = x;
+    return column;
+  }
+
+  function getNewTile(y) {
+    var tile = [];
+    tile.y = y;
+    return tile;
   }
 
   return Grid;
