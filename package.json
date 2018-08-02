@@ -1,0 +1,37 @@
+{
+  "name": "grid-hierarchy",
+  "version": "1.0.0",
+  "description": "A grid hierarchy implementation for JS",
+  "main": "index.js",
+  "directories": {
+    "test": "tests"
+  },
+  "scripts": {
+    "test": "jest"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/danielmoniz/grid-hierarchy.git"
+  },
+  "jest": {
+    "moduleDirectories": [
+      "node_modules",
+      "grid"
+    ],
+    "testURL": "http://localhost"
+  },
+  "keywords": [
+    "grid",
+    "grid hierarchy"
+  ],
+  "author": "Daniel Moniz",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/danielmoniz/grid-hierarchy/issues"
+  },
+  "devDependencies": {
+    "jest": "^23.4.2"
+  },
+  "dependencies": {
+  }
+}
