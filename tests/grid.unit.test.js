@@ -16,7 +16,6 @@ describe('Grid', function() {
     var grid = new Grid(4);
     var entity = { x: 5, y: 6 };
     grid.add(entity);
-    console.log(grid);
     expect(grid.get(1, 1).length).toBe(1);
     expect(grid.get(1, 1)[0]).toBe(entity);
   })
@@ -25,7 +24,6 @@ describe('Grid', function() {
     var grid = new Grid(4);
     var entity = { x: 4, y: 8 };
     grid.add(entity);
-    console.log(grid);
     expect(grid.get(1, 2).length).toBe(1);
     expect(grid.get(1, 2)[0]).toBe(entity);
   })
@@ -34,7 +32,6 @@ describe('Grid', function() {
     var grid = new Grid(4);
     var entity = { x: 3.999, y: 4.0001 };
     grid.add(entity);
-    console.log(grid);
     expect(grid.get(0, 1).length).toBe(1);
     expect(grid.get(0, 1)[0]).toBe(entity);
   })
