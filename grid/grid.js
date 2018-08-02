@@ -67,19 +67,8 @@ module.exports.Grid = (function() {
    * insert it into the collection. Otherwise, return it.
    */
   function findOrAddColumn(columns, x) {
-    var possibleNewColumn = getNewColumn(x);
-    // loop until column is found or is undefined
-    for (var i = 0; i < columns.length + 1; i++) {
-      // console.log('searching for column at', i);
-      var column = columns[i];
-      if (column === undefined || column.x > x) {
-        // add column as previous item in array
-        columns.splice(i, 0, possibleNewColumn);
-        return possibleNewColumn;
-      } else if (column.x === x) {
-        return column;
-      }
-    }
+    var newColumn = getNewColumn(x);
+    return findOrAddEntity(columns, newColumn, 'x', x)
   }
 
   /*
@@ -88,20 +77,23 @@ module.exports.Grid = (function() {
    * insert it into the collection. Otherwise, return it.
    */
   function findOrAddTile(tiles, y) {
-    var possibleNewTile = getNewTile(y);
-    // loop until tile is found or is undefined
-    for (var i = 0; i < tiles.length + 1; i++) {
+    var newTile = getNewTile(y);
+    return findOrAddEntity(tiles, newTile, 'y', y);
+  }
+
+  function findOrAddEntity(collection, newEntity, dimension, value) {
+    // loop until entity is found or is undefined
+    for (var i = 0; i < collection.length + 1; i++) {
       // console.log('searching for tile at', i);
-      var tile = tiles[i];
-      if (tile === undefined || tile.y > y) {
-        // add tile as previous item in array
-        tiles.splice(i, 0, possibleNewTile);
-        return possibleNewTile
-      } else if (tile.y === y) {
-        return tile
+      var entity = collection[i];
+      if (entity === undefined || entity[dimension] > value) {
+        // add entity as previous item in array
+        collection.splice(i, 0, newEntity);
+        return newEntity;
+      } else if (entity[dimension] === value) {
+        return entity;
       }
     }
-    return correctTile;
   }
 
   function getNewColumn(x) {
