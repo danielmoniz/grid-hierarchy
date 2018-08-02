@@ -29,19 +29,24 @@ module.exports.Grid = (function() {
     return []
   }
 
-  // for now assumes that entities have no width/height
+  /*
+   * Adds an entity to one or more tiles in the grid.
+   * Note that entities need not have a width or height.
+   */
   Grid.prototype.add = function(entity) {
     var columnX = getGridValue(entity.x, this.gridSize);
     var rowY = getGridValue(entity.y, this.gridSize);
+    var width = entity.width || 0;
+    var height = entity.height || 0;
+    var widthColumnX = getGridValue(entity.x + width, this.gridSize);
+    var heightRowY = getGridValue(entity.y + height, this.gridSize);
 
     addEntity(entity, this.columns, columnX, rowY)
 
-    var widthColumnX = getGridValue(entity.x + entity.width, this.gridSize);
     if (widthColumnX !== columnX) {
       addEntity(entity, this.columns, widthColumnX, rowY)
     }
 
-    var heightRowY = getGridValue(entity.y + entity.height, this.gridSize);
     if (heightRowY !== rowY) {
       addEntity(entity, this.columns, columnX, heightRowY)
     }
