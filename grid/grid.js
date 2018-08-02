@@ -3,10 +3,9 @@
 
 module.exports.Grid = (function() {
   function Grid(gridSize, zeroes) {
-    this.gridSize = gridSize || 1
-    this.data = {};
+    this.gridSize = gridSize || 1;
     this.zeroesInKey = zeroes || 0;
-    this.columns = []
+    this.columns = [];
   }
 
   /*
@@ -41,23 +40,23 @@ module.exports.Grid = (function() {
     var widthColumnX = getGridValue(entity.x + width, this.gridSize);
     var heightRowY = getGridValue(entity.y + height, this.gridSize);
 
-    addEntity(entity, this.columns, columnX, rowY)
+    addEntity(entity, this.columns, columnX, rowY);
 
     if (widthColumnX !== columnX) {
-      addEntity(entity, this.columns, widthColumnX, rowY)
+      addEntity(entity, this.columns, widthColumnX, rowY);
     }
 
     if (heightRowY !== rowY) {
-      addEntity(entity, this.columns, columnX, heightRowY)
+      addEntity(entity, this.columns, columnX, heightRowY);
     }
 
     if (widthColumnX !== columnX && heightRowY !== rowY) {
-      addEntity(entity, this.columns, widthColumnX, heightRowY)
+      addEntity(entity, this.columns, widthColumnX, heightRowY);
     }
   }
 
   function getGridValue(actualX, gridSize) {
-    return Math.floor(actualX / gridSize)
+    return Math.floor(actualX / gridSize);
   }
 
   function addEntity(entity, columns, x, y) {
@@ -73,7 +72,7 @@ module.exports.Grid = (function() {
    */
   function findOrAddColumn(columns, x) {
     var newColumn = getNewColumn(x);
-    return findOrAddEntity(columns, newColumn, 'x', x)
+    return findOrAddEntity(columns, newColumn, 'x', x);
   }
 
   /*
