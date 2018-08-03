@@ -2,9 +2,8 @@
 // @TODO Use LinkedList instead of array. Splicing items into an array is (surely?) be less efficient than inserting into a LinkedList, especially if iteration is already performed.
 
 module.exports.Grid = (function() {
-  function Grid(gridSize, zeroes) {
+  function Grid(gridSize) {
     this.gridSize = gridSize || 1;
-    this.zeroesInKey = zeroes || 0;
     this.columns = [];
   }
 
@@ -26,6 +25,50 @@ module.exports.Grid = (function() {
       }
     }
     return []
+  }
+
+  // @TODO Have a method that iterates over a column (from one x value to another) and returns the data in all of those tiles
+  Grid.prototype.getFromColumn = function(trueY, trueMinX, trueMaxX) {
+    var y = getGridValue(trueY, this.gridSize);
+    var minX = getGridValue(trueMinX, this.gridSize);
+    var maxX = getGridValue(trueMaxX, this.gridSize);
+
+    var column = this.findColumn(y);
+  }
+
+  Grid.prototype.findColumn = function(y) {
+    for (var i = 0; i < this.columns.length; i++) {
+      var column = this.columns[i];
+      if (column.y > y) { break }
+      if (column.y < y) { continue }
+      return column
+    }
+    return getNewColumn(y)
+  }
+
+  /*
+   * Returns a list of all tiles in a given range within a column. Needs to be given a column number, not an actual x value.
+   */
+  Grid.prototype.getTilesInRange = function(column, minY, maxY) {
+    var allTiles = [];
+    for (var i = 0; i < column.tiles.length; i++) {
+      var tile = column.tiles[i];
+      if (tile.y < minY) { continue }
+      if (tile.y > maxY) { break }
+      allTiles.push(tile);
+    }
+    return allTiles;
+  }
+
+  /*
+   * Returns the combined data from a set of tiles.
+   */
+  Grid.prototype.getEntitiesFromTiles = function(tiles) {
+    var allEntities = [];
+    tiles.forEach(function(tile) {
+      allEntities = allEntities.concat(tile.data)
+    });
+    return allEntities;
   }
 
   /*
