@@ -12,17 +12,13 @@ module.exports.Grid = (function() {
    * If tile does not exist, return an empty array.
    */
   Grid.prototype.get = function(x, y) {
-    for (var i = 0; i < this.columns.length; i++) {
-      var column = this.columns[i];
-      if (column.x > x) { return [] }
-      if (column.x < x) { continue }
+    var column = this.findColumn(x);
 
-      for (var j = 0; j < column.tiles.length; j++) {
-        var tile = column.tiles[j];
-        if (tile.y > y) { return [] }
-        if (tile.y < y) { continue }
-        return tile.data;
-      }
+    for (var j = 0; j < column.tiles.length; j++) {
+      var tile = column.tiles[j];
+      if (tile.y > y) { return [] }
+      if (tile.y < y) { continue }
+      return tile.data;
     }
     return []
   }
@@ -36,14 +32,17 @@ module.exports.Grid = (function() {
     var column = this.findColumn(y);
   }
 
-  Grid.prototype.findColumn = function(y) {
+  /*
+   * Returns a column given an x value. If no column found, returns a new one.
+   */
+  Grid.prototype.findColumn = function(x) {
     for (var i = 0; i < this.columns.length; i++) {
       var column = this.columns[i];
-      if (column.y > y) { break }
-      if (column.y < y) { continue }
+      if (column.x > x) { break }
+      if (column.x < x) { continue }
       return column
     }
-    return getNewColumn(y)
+    return getNewColumn(x)
   }
 
   /*
