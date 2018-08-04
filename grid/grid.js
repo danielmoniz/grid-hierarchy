@@ -23,17 +23,9 @@ module.exports.Grid = (function() {
     return []
   }
 
-  // @TODO Have a method that iterates over a column (from one x value to another) and returns the data in all of those tiles
-  Grid.prototype.getFromColumn = function(trueY, trueMinX, trueMaxX) {
-    var y = getGridValue(trueY, this.gridSize);
-    var minX = getGridValue(trueMinX, this.gridSize);
-    var maxX = getGridValue(trueMaxX, this.gridSize);
-
-    var column = this.findColumn(y);
-  }
-
   /*
-   * Returns a column given an x value. If no column found, returns a new one.
+   * Returns a column given a column x value (not a true x).
+   * If no column found, returns a new one.
    */
   Grid.prototype.findColumn = function(x) {
     for (var i = 0; i < this.columns.length; i++) {
@@ -42,7 +34,34 @@ module.exports.Grid = (function() {
       if (column.x < x) { continue }
       return column
     }
-    return getNewColumn(x)
+    return getNewColumn(x);
+  }
+
+  /*
+   * Returns all columns that intersect with a range of true x values.
+   * NOTE: This means that it may return a column that contains an entity outside the provided range. This is because the column intersects partially with the given range.
+   */
+  Grid.prototype.findColumns = function(trueMinX, trueMaxX) {
+    var minX = getGridValue(trueMinX, this.gridSize);
+    var maxX = getGridValue(trueMaxX, this.gridSize);
+    var allColumns = [];
+
+    for (var i = 0; i < this.columns.length; i++) {
+      var column = this.columns[i];
+      if (column.x > maxX) { break }
+      if (column.x < minX) { continue }
+      allColumns.push(column);
+    }
+    return allColumns;
+  }
+
+  // @TODO Have a method that iterates over a column (from one x value to another) and returns the data in all of those tiles
+  Grid.prototype.getFromColumn = function(trueY, trueMinX, trueMaxX) {
+    var y = getGridValue(trueY, this.gridSize);
+    var minX = getGridValue(trueMinX, this.gridSize);
+    var maxX = getGridValue(trueMaxX, this.gridSize);
+
+    var column = this.findColumn(y);
   }
 
   /*
@@ -57,6 +76,21 @@ module.exports.Grid = (function() {
       allTiles.push(tile);
     }
     return allTiles;
+  }
+
+  Grid.prototype.findEntitiesInArea = function(trueMinX, trueMinY, trueMaxX, trueMaxY) {
+    var minX = getGridValue(trueMinX, this.gridSize);
+    var maxX = getGridValue(trueMaxX, this.gridSize);
+    var minY = getGridValue(trueMinY, this.gridSize);
+    var maxY = getGridValue(trueMaxY, this.gridSize);
+
+    var columns = this.findColumns(trueMinX, trueMaxX);
+    var tiles = [];
+    columns.forEach(function(column) {
+      var columnTiles = this.getTilesInRange(column, minY, maxY);
+      tiles = tiles.concat(columnTiles);
+    }.bind(this));
+    return this.getEntitiesFromTiles(tiles);
   }
 
   /*
@@ -95,6 +129,8 @@ module.exports.Grid = (function() {
     if (widthColumnX !== columnX && heightRowY !== rowY) {
       addEntity(entity, this.columns, widthColumnX, heightRowY);
     }
+
+    return entity;
   }
 
   function getGridValue(actualX, gridSize) {

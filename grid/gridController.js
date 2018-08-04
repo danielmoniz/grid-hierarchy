@@ -13,6 +13,7 @@ module.exports.GridController = (function() {
     // @TODO Iterate over each column and union all results.
       // Columns: x to x + width
       // Rows: y to y + width
+    var columns = this.grid.findColumns(x, x + width);
     return this.grid.get(x, y);
   }
 

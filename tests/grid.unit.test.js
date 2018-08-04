@@ -88,6 +88,38 @@ describe('Grid', function() {
     })
   })
 
+  describe('findColumns', function() {
+    it('should return no columns if none are in range', function() {
+      var grid = new Grid(4);
+      grid.add({ x: 17, y: 2, name: 'One' });
+
+      var columns = grid.findColumns(0, 15);
+      expect(columns.length).toBe(0);
+    })
+
+    it('should return all columns within the given range', function() {
+      var grid = new Grid(4);
+      grid.add({ x: 2, y: 2, name: 'One' }); // x = 0
+      grid.add({ x: 5, y: 2, name: 'Two' }); // x = 1
+      grid.add({ x: 10, y: 2, name: 'Three' }); // x = 2
+      grid.add({ x: 13, y: 2, name: 'Four' }); // x = 3
+
+      var columns = grid.findColumns(5, 11);
+      expect(columns.length).toBe(2);
+      expect(columns[0].x).toBe(1)
+      expect(columns[1].x).toBe(2)
+    })
+
+    it('should return columns that partially intersect given range', function() {
+      var grid = new Grid(4);
+      grid.add({ x: 0, y: 2, name: 'One' }); // x = 0
+      grid.add({ x: 7, y: 2, name: 'Two' }); // x = 1
+
+      var columns = grid.findColumns(3, 4);
+      expect(columns.length).toBe(2);
+    })
+  })
+
   describe('getTilesInRange', function() {
     it('should return a list of all tiles in a range within a column', function() {
       var grid = new Grid(4);
@@ -121,6 +153,44 @@ describe('Grid', function() {
       expect(entities[0].name).toBe('One');
       expect(entities[1].name).toBe('Two');
       expect(entities[2].name).toBe('Three');
+    })
+  })
+
+  describe('findEntitiesInArea', function() {
+    it('should return no entities if none are in area', function() {
+      var grid = new Grid(4);
+      grid.add({ x: 0, y: 0 });
+      grid.add({ x: 13, y: 13 });
+      grid.add({ x: 13, y: 0 });
+      grid.add({ x: 0, y: 13 });
+
+      var entities = grid.findEntitiesInArea(5, 5, 10, 10);
+      expect(entities.length).toBe(0);
+    })
+
+    it('should return entities if inside area', function() {
+      var grid = new Grid(4);
+      grid.add({ x: 0, y: 0 }); // outside area
+      grid.add({ x: 13, y: 5 });
+      grid.add({ x: 7, y: 10 });
+      grid.add({ x: 13, y: 5 });
+      grid.add({ x: 13, y: 13 }); // outside area
+
+      var entities = grid.findEntitiesInArea(5, 5, 13, 10);
+      expect(entities.length).toBe(3);
+    })
+
+    it('should return entities if area intersects with their column', function() {
+      var grid = new Grid(4);
+      grid.add({ x: 0, y: 0 }); // intersects
+      grid.add({ x: 13, y: 5 });
+      grid.add({ x: 7, y: 10 });
+      grid.add({ x: 13, y: 5 });
+      grid.add({ x: 14, y: 14 }); // intersects
+      grid.add({ x: 16, y: 17 }); // outside area
+
+      var entities = grid.findEntitiesInArea(3, 3, 13, 13);
+      expect(entities.length).toBe(5);
     })
   })
 
