@@ -9,12 +9,7 @@ module.exports.GridController = (function() {
   GridController.prototype.get = function(x, y, width, height) {
     width = width || 0;
     height = height || 0;
-
-    // @TODO Iterate over each column and union all results.
-      // Columns: x to x + width
-      // Rows: y to y + width
-    var columns = this.grid.findColumns(x, x + width);
-    return this.grid.get(x, y);
+    return this.grid.findEntitiesInArea(x, y, x + width, y + height);
   }
 
   GridController.prototype.add = function(entity) {
