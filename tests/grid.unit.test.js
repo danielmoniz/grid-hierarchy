@@ -2,7 +2,7 @@
 var Grid = require('grid').Grid;
 
 describe('Grid', function() {
-  describe('add/get', function() {
+  describe('add', function() {
     it('should add an entity to its location in the grid', function() {
       var grid = new Grid();
       var entity = { x: 3, y: 4 };
@@ -53,6 +53,23 @@ describe('Grid', function() {
       expect(grid.get(1, 1)[0]).toBe(entity);
     })
 
+    it('should add an entity to 3+ grid tiles if it is wide enough', function() {
+      var grid = new Grid(4);
+      var entity = { x: 3, y: 2, width: 6, height: 1 };
+      grid.add(entity);
+
+      expect(grid.get(0, 0).length).toBe(1);
+      expect(grid.get(0, 0)[0]).toBe(entity);
+
+      expect(grid.get(1, 0).length).toBe(1);
+      expect(grid.get(1, 0)[0]).toBe(entity);
+
+      expect(grid.get(2, 0).length).toBe(1);
+      expect(grid.get(2, 0)[0]).toBe(entity);
+    })
+  })
+
+  describe('get', function() {
     it('should only return entities if in same region', function() {
       var grid = new Grid(6);
       grid.add({ x: 5, y: 3, name: 'One' });
@@ -191,6 +208,21 @@ describe('Grid', function() {
 
       var entities = grid.findEntitiesInArea(3, 3, 13, 13);
       expect(entities.length).toBe(5);
+    })
+
+    it('should avoid returning duplicate entities from multiple tiles', function() {
+      var grid = new Grid(4);
+      grid.add({ x: 0, y: 0, width: 5 }); // in 2 columns
+      grid.add({ x: 3, y: 0, width: 6 }); // in 3 columns
+      grid.add({ x: 6, y: 0, width: 3 }); // in 2 columns
+
+      expect(grid.columns.length).toBe(3);
+      expect(grid.columns[0].tiles[0].data.length).toBe(2);
+      expect(grid.columns[1].tiles[0].data.length).toBe(3);
+      expect(grid.columns[2].tiles[0].data.length).toBe(2);
+
+      var entities = grid.findEntitiesInArea(2, 3, 8, 9);
+      expect(entities.length).toBe(3);
     })
   })
 

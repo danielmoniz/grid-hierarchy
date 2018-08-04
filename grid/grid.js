@@ -99,7 +99,7 @@ module.exports.Grid = (function() {
   Grid.prototype.getEntitiesFromTiles = function(tiles) {
     var allEntities = [];
     tiles.forEach(function(tile) {
-      allEntities = allEntities.concat(tile.data)
+      allEntities = union(allEntities, tile.data);
     });
     return allEntities;
   }
@@ -107,6 +107,7 @@ module.exports.Grid = (function() {
   /*
    * Adds an entity to one or more tiles in the grid.
    * Note that entities need not have a width or height.
+   * @TODO Ensure entities that are 3 columns wide or tall get added to all tiles (currently only being added to max four tiles).
    */
   Grid.prototype.add = function(entity) {
     var columnX = getGridValue(entity.x, this.gridSize);
@@ -116,18 +117,11 @@ module.exports.Grid = (function() {
     var widthColumnX = getGridValue(entity.x + width, this.gridSize);
     var heightRowY = getGridValue(entity.y + height, this.gridSize);
 
-    addEntity(entity, this.columns, columnX, rowY);
-
-    if (widthColumnX !== columnX) {
-      addEntity(entity, this.columns, widthColumnX, rowY);
-    }
-
-    if (heightRowY !== rowY) {
-      addEntity(entity, this.columns, columnX, heightRowY);
-    }
-
-    if (widthColumnX !== columnX && heightRowY !== rowY) {
-      addEntity(entity, this.columns, widthColumnX, heightRowY);
+    // add entity to every intersecting tile
+    for (var x = columnX; x <= widthColumnX; x++) {
+      for (var y = rowY; y <= heightRowY; y++) {
+        addEntity(entity, this.columns, x, y);
+      }
     }
 
     return entity;
@@ -150,7 +144,7 @@ module.exports.Grid = (function() {
    */
   function findOrAddColumn(columns, x) {
     var newColumn = getNewColumn(x);
-    return findOrAddEntity(columns, newColumn, 'x', x);
+    return findOrBuildEntity(columns, newColumn, 'x', x);
   }
 
   /*
@@ -160,10 +154,10 @@ module.exports.Grid = (function() {
    */
   function findOrAddTile(tiles, y) {
     var newTile = getNewTile(y);
-    return findOrAddEntity(tiles, newTile, 'y', y);
+    return findOrBuildEntity(tiles, newTile, 'y', y);
   }
 
-  function findOrAddEntity(collection, newEntity, dimension, value) {
+  function findOrBuildEntity(collection, newEntity, dimension, value) {
     // loop until entity is found or is undefined
     for (var i = 0; i < collection.length + 1; i++) {
       // console.log('searching for tile at', i);
@@ -184,6 +178,17 @@ module.exports.Grid = (function() {
 
   function getNewTile(y) {
     return { y: y, data: [] }
+  }
+
+  /*
+   * NOTE: This runs in O(m * n) and could very well be a future bottleneck.
+   * If ES6 were being used in this library, it could likely be done with a Map to reduce it to O(m + n).
+   */
+  function union(array1, array2) {
+    var newArray = array1.concat(array2);
+    return newArray.filter(function(element, index) {
+      return index === newArray.indexOf(element)
+    });
   }
 
   return Grid;

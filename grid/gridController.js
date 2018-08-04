@@ -16,16 +16,5 @@ module.exports.GridController = (function() {
     return this.grid.add(entity);
   }
 
-  /*
-   * NOTE: This runs in O(m * n) and could very well be a future bottleneck.
-   * If ES6 were being used in this library, it could likely be done with a Map to reduce it to O(m + n).
-   */
-  function union(array1, array2) {
-    var newArray = array1.concat(array2);
-    return newArray.filter(function(element, index) {
-      return index === newArray.indexOf(element)
-    });
-  }
-
   return GridController;
 })()
