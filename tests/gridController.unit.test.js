@@ -154,4 +154,17 @@ describe('GridController', function() {
     })
   })
 
+  describe('clear', function() {
+    it('should remove all columns from the grid', function() {
+      var grid = new GridController(4);
+      grid.add({ x: 0, y: 0, width: 5 }); // in 2 columns
+      grid.add({ x: 3, y: 0, width: 6 }); // in 3 columns
+      grid.add({ x: 6, y: 0, width: 3 }); // in 2 columns
+      expect(grid.grid.columns.length).toBe(3);
+
+      grid.clear();
+      expect(grid.grid.columns.length).toBe(0);
+    })
+  })
+
 })

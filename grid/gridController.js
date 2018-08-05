@@ -7,6 +7,10 @@ module.exports.GridController = (function() {
     this.gridSize = gridSize || 1;
   }
 
+  GridController.prototype.clear = function() {
+    this.grid = new Grid();
+  }
+
   /*
    * Adds an entity to one or more tiles in the grid.
    * Note that entities need not have a width or height.
