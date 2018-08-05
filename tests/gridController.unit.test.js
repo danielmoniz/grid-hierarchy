@@ -2,7 +2,7 @@
 var GridController = require('gridController').GridController;
 
 describe('GridController', function() {
-  describe('get/add', function() {
+  describe('get', function() {
     it('should return entities in region if passing zero width or height', function() {
       var grid = new GridController(4);
       grid.add({ x: 5, y: 6 });

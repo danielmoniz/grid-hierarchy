@@ -1,4 +1,6 @@
 
+var Column = require('./column').Column;
+
 // @TODO Use LinkedList instead of array. Splicing items into an array is (surely?) be less efficient than inserting into a LinkedList, especially if iteration is already performed.
 
 module.exports.Grid = (function() {
@@ -34,7 +36,7 @@ module.exports.Grid = (function() {
       if (column.x < x) { continue }
       return column
     }
-    return getNewColumn(x);
+    return new Column(x);
   }
 
   /*
@@ -55,29 +57,6 @@ module.exports.Grid = (function() {
     return allColumns;
   }
 
-  // @TODO Have a method that iterates over a column (from one x value to another) and returns the data in all of those tiles
-  Grid.prototype.getFromColumn = function(trueY, trueMinX, trueMaxX) {
-    var y = getGridValue(trueY, this.gridSize);
-    var minX = getGridValue(trueMinX, this.gridSize);
-    var maxX = getGridValue(trueMaxX, this.gridSize);
-
-    var column = this.findColumn(y);
-  }
-
-  /*
-   * Returns a list of all tiles in a given range within a column. Needs to be given a column number, not an actual x value.
-   */
-  Grid.prototype.getTilesInRange = function(column, minY, maxY) {
-    var allTiles = [];
-    for (var i = 0; i < column.tiles.length; i++) {
-      var tile = column.tiles[i];
-      if (tile.y < minY) { continue }
-      if (tile.y > maxY) { break }
-      allTiles.push(tile);
-    }
-    return allTiles;
-  }
-
   Grid.prototype.findEntitiesInArea = function(trueMinX, trueMinY, trueMaxX, trueMaxY) {
     var minX = getGridValue(trueMinX, this.gridSize);
     var maxX = getGridValue(trueMaxX, this.gridSize);
@@ -87,9 +66,10 @@ module.exports.Grid = (function() {
     var columns = this.findColumns(trueMinX, trueMaxX);
     var tiles = [];
     columns.forEach(function(column) {
-      var columnTiles = this.getTilesInRange(column, minY, maxY);
+      var columnTiles = column.getTilesInRange(minY, maxY);
       tiles = tiles.concat(columnTiles);
     }.bind(this));
+
     return this.getEntitiesFromTiles(tiles);
   }
 
@@ -143,7 +123,7 @@ module.exports.Grid = (function() {
    * insert it into the collection. Otherwise, return it.
    */
   function findOrAddColumn(columns, x) {
-    var newColumn = getNewColumn(x);
+    var newColumn = new Column(x);
     return findOrBuildEntity(columns, newColumn, 'x', x);
   }
 
@@ -170,10 +150,6 @@ module.exports.Grid = (function() {
         return entity;
       }
     }
-  }
-
-  function getNewColumn(x) {
-    return { x: x, tiles: [] };
   }
 
   function getNewTile(y) {
