@@ -3,19 +3,35 @@ var Grid = require('./grid').Grid;
 
 module.exports.GridController = (function() {
   function GridController(gridSize) {
-    this.grid = new Grid(gridSize);
-    this.gridSize = gridSize;
+    this.grid = new Grid();
+    this.gridSize = gridSize || 1;
   }
 
+  /*
+   * Adds an entity to one or more tiles in the grid.
+   * Note that entities need not have a width or height.
+   * @TODO Ensure entities that are 3 columns wide or tall get added to all tiles (currently only being added to max four tiles).
+   */
   GridController.prototype.add = function(entity) {
-    return this.grid.add(entity);
+    var columnX = this.getGridValue(entity.x);
+    var rowY = this.getGridValue(entity.y);
+    var width = entity.width || 0;
+    var height = entity.height || 0;
+    var widthColumnX = this.getGridValue(entity.x + width);
+    var heightRowY = this.getGridValue(entity.y + height);
+
+    return this.grid.add(entity, columnX, rowY, widthColumnX, heightRowY);
+  }
+
+  GridController.prototype.get = function(x, y) {
+    return this.grid.get(x, y);
   }
 
   /*
    * Return entities in a given area.
    * Must pass a starting (x, y) and the width/height of the area.
    */
-  GridController.prototype.get = function(x, y, width, height) {
+  GridController.prototype.findEntitiesBySize = function(x, y, width, height) {
     width = width || 0;
     height = height || 0;
 

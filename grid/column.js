@@ -19,7 +19,7 @@ module.exports.Column = (function() {
     return allTiles;
   }
 
-  Column.prototype.findTile = function(y) {
+  Column.prototype.getFromTile = function(y) {
     for (var j = 0; j < this.tiles.length; j++) {
       var tile = this.tiles[j];
       if (tile.y > y) { return [] }
@@ -45,6 +45,11 @@ module.exports.Column = (function() {
         return tile;
       }
     }
+  }
+
+  Column.prototype.addEntity = function(entity, y) {
+    var tile = this.findOrAddTile(y);
+    tile.data.push(entity);
   }
 
   function getNewTile(y) {

@@ -4,8 +4,7 @@ var Column = require('./column').Column;
 // @TODO Use LinkedList instead of array. Splicing items into an array is (surely?) be less efficient than inserting into a LinkedList, especially if iteration is already performed.
 
 module.exports.Grid = (function() {
-  function Grid(gridSize) {
-    this.gridSize = gridSize || 1;
+  function Grid() {
     this.columns = [];
   }
 
@@ -17,7 +16,7 @@ module.exports.Grid = (function() {
   Grid.prototype.get = function(x, y) {
     var column = this.findColumns(x, x)[0];
     if (!column) { return [] }
-    return column.findTile(y);
+    return column.getFromTile(y);
   }
 
   /*
@@ -63,17 +62,12 @@ module.exports.Grid = (function() {
    * Note that entities need not have a width or height.
    * @TODO Ensure entities that are 3 columns wide or tall get added to all tiles (currently only being added to max four tiles).
    */
-  Grid.prototype.add = function(entity) {
-    var columnX = getGridValue(entity.x, this.gridSize);
-    var rowY = getGridValue(entity.y, this.gridSize);
-    var width = entity.width || 0;
-    var height = entity.height || 0;
-    var widthColumnX = getGridValue(entity.x + width, this.gridSize);
-    var heightRowY = getGridValue(entity.y + height, this.gridSize);
-
+  Grid.prototype.add = function(entity, minX, minY, maxX, maxY) {
+    if (maxX === undefined) { maxX = minX }
+    if (maxY === undefined) { maxY = minY }
     // add entity to every intersecting tile
-    for (var x = columnX; x <= widthColumnX; x++) {
-      for (var y = rowY; y <= heightRowY; y++) {
+    for (var x = minX; x <= maxX; x++) {
+      for (var y = minY; y <= maxY; y++) {
         this.addEntity(entity, x, y);
       }
     }
@@ -83,8 +77,7 @@ module.exports.Grid = (function() {
 
   Grid.prototype.addEntity = function(entity, x, y) {
     var column = this.findOrAddColumn(x);
-    var tile = column.findOrAddTile(y);
-    tile.data.push(entity);
+    column.addEntity(entity, y);
   }
 
   /*
@@ -115,10 +108,6 @@ module.exports.Grid = (function() {
     return newArray.filter(function(element, index) {
       return index === newArray.indexOf(element)
     });
-  }
-
-  function getGridValue(actualX, gridSize) {
-    return Math.floor(actualX / gridSize);
   }
 
   return Grid;
