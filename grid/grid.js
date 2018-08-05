@@ -14,15 +14,7 @@ module.exports.Grid = (function() {
    * If tile does not exist, return an empty array.
    */
   Grid.prototype.get = function(x, y) {
-    var column = this.findColumn(x);
-
-    for (var j = 0; j < column.tiles.length; j++) {
-      var tile = column.tiles[j];
-      if (tile.y > y) { return [] }
-      if (tile.y < y) { continue }
-      return tile.data;
-    }
-    return []
+    return this.findColumn(x).findTile(y);
   }
 
   /*
@@ -100,7 +92,7 @@ module.exports.Grid = (function() {
     // add entity to every intersecting tile
     for (var x = columnX; x <= widthColumnX; x++) {
       for (var y = rowY; y <= heightRowY; y++) {
-        addEntity(entity, this.columns, x, y);
+        this.addEntity(entity, x, y);
       }
     }
 
@@ -111,49 +103,29 @@ module.exports.Grid = (function() {
     return Math.floor(actualX / gridSize);
   }
 
-  function addEntity(entity, columns, x, y) {
-    var column = findOrAddColumn(columns, x);
-    var tile = findOrAddTile(column.tiles, y);
+  Grid.prototype.addEntity = function(entity, x, y) {
+    var column = this.findOrAddColumn(x);
+    var tile = column.findOrAddTile(y);
     tile.data.push(entity);
   }
 
   /*
-   * Searches for a column given an x value.
-   * If the column is not found, ie. it is passed in the loop,
-   * insert it into the collection. Otherwise, return it.
+   * Search for a column with a given x value. If not found, create it.
+   * @NOTE: This code is essentially duplicated in Column.
    */
-  function findOrAddColumn(columns, x) {
-    var newColumn = new Column(x);
-    return findOrBuildEntity(columns, newColumn, 'x', x);
-  }
-
-  /*
-   * Searches for a tile given an y value.
-   * If the tile is not found, ie. it is passed in the loop,
-   * insert it into the collection. Otherwise, return it.
-   */
-  function findOrAddTile(tiles, y) {
-    var newTile = getNewTile(y);
-    return findOrBuildEntity(tiles, newTile, 'y', y);
-  }
-
-  function findOrBuildEntity(collection, newEntity, dimension, value) {
-    // loop until entity is found or is undefined
-    for (var i = 0; i < collection.length + 1; i++) {
-      // console.log('searching for tile at', i);
-      var entity = collection[i];
-      if (entity === undefined || entity[dimension] > value) {
-        // add entity as previous item in array
-        collection.splice(i, 0, newEntity);
-        return newEntity;
-      } else if (entity[dimension] === value) {
-        return entity;
+   Grid.prototype.findOrAddColumn = function(x) {
+    // loop until column is found or is undefined
+    for (var i = 0; i < this.columns.length + 1; i++) {
+      var column = this.columns[i];
+      if (column === undefined || column.x > x) {
+        var newColumn = new Column(x);
+        // add column as previous item in array
+        this.columns.splice(i, 0, newColumn);
+        return newColumn;
+      } else if (column.x === x) {
+        return column;
       }
     }
-  }
-
-  function getNewTile(y) {
-    return { y: y, data: [] }
   }
 
   /*
