@@ -23,7 +23,7 @@ module.exports.GridController = (function() {
     return this.grid.add(entity, columnX, rowY, widthColumnX, heightRowY);
   }
 
-  GridController.prototype.get = function(x, y) {
+  GridController.prototype.getFromTile = function(x, y) {
     return this.grid.get(x, y);
   }
 
@@ -31,18 +31,18 @@ module.exports.GridController = (function() {
    * Return entities in a given area.
    * Must pass a starting (x, y) and the width/height of the area.
    */
-  GridController.prototype.findEntitiesBySize = function(x, y, width, height) {
+  GridController.prototype.getByArea = function(x, y, width, height) {
     width = width || 0;
     height = height || 0;
 
-    return this.findEntitiesInArea(x, y, x + width, y + height);
+    return this.getByAreaCorners(x, y, x + width, y + height);
   }
 
   /*
    * Return entities in a given area.
    * Must pass a minimum (x, y) and a max (x, y) to define the area.
    */
-  GridController.prototype.findEntitiesInArea = function(trueMinX, trueMinY, trueMaxX, trueMaxY) {
+  GridController.prototype.getByAreaCorners = function(trueMinX, trueMinY, trueMaxX, trueMaxY) {
     var minX = this.getGridValue(trueMinX);
     var maxX = this.getGridValue(trueMaxX);
     var minY = this.getGridValue(trueMinY);
