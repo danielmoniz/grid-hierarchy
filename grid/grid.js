@@ -36,12 +36,7 @@ module.exports.Grid = (function() {
     return allColumns;
   }
 
-  Grid.prototype.findEntitiesInArea = function(trueMinX, trueMinY, trueMaxX, trueMaxY) {
-    var minX = getGridValue(trueMinX, this.gridSize);
-    var maxX = getGridValue(trueMaxX, this.gridSize);
-    var minY = getGridValue(trueMinY, this.gridSize);
-    var maxY = getGridValue(trueMaxY, this.gridSize);
-
+  Grid.prototype.findEntitiesInArea = function(minX, minY, maxX, maxY) {
     var columns = this.findColumns(minX, maxX);
     var tiles = [];
     columns.forEach(function(column) {
@@ -86,10 +81,6 @@ module.exports.Grid = (function() {
     return entity;
   }
 
-  function getGridValue(actualX, gridSize) {
-    return Math.floor(actualX / gridSize);
-  }
-
   Grid.prototype.addEntity = function(entity, x, y) {
     var column = this.findOrAddColumn(x);
     var tile = column.findOrAddTile(y);
@@ -124,6 +115,10 @@ module.exports.Grid = (function() {
     return newArray.filter(function(element, index) {
       return index === newArray.indexOf(element)
     });
+  }
+
+  function getGridValue(actualX, gridSize) {
+    return Math.floor(actualX / gridSize);
   }
 
   return Grid;
