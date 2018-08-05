@@ -12,32 +12,19 @@ module.exports.Grid = (function() {
   /*
    * Return the items in a tile at a position in the grid.
    * If tile does not exist, return an empty array.
+   * @NOTE: This method is largely for testing purposes.
    */
   Grid.prototype.get = function(x, y) {
-    return this.findColumn(x).findTile(y);
-  }
-
-  /*
-   * Returns a column given a column x value (not a true x).
-   * If no column found, returns a new one.
-   */
-  Grid.prototype.findColumn = function(x) {
-    for (var i = 0; i < this.columns.length; i++) {
-      var column = this.columns[i];
-      if (column.x > x) { break }
-      if (column.x < x) { continue }
-      return column
-    }
-    return new Column(x);
+    var column = this.findColumns(x, x)[0];
+    if (!column) { return [] }
+    return column.findTile(y);
   }
 
   /*
    * Returns all columns that intersect with a range of true x values.
    * NOTE: This means that it may return a column that contains an entity outside the provided range. This is because the column intersects partially with the given range.
    */
-  Grid.prototype.findColumns = function(trueMinX, trueMaxX) {
-    var minX = getGridValue(trueMinX, this.gridSize);
-    var maxX = getGridValue(trueMaxX, this.gridSize);
+  Grid.prototype.findColumns = function(minX, maxX) {
     var allColumns = [];
 
     for (var i = 0; i < this.columns.length; i++) {
@@ -55,7 +42,7 @@ module.exports.Grid = (function() {
     var minY = getGridValue(trueMinY, this.gridSize);
     var maxY = getGridValue(trueMaxY, this.gridSize);
 
-    var columns = this.findColumns(trueMinX, trueMaxX);
+    var columns = this.findColumns(minX, maxX);
     var tiles = [];
     columns.forEach(function(column) {
       var columnTiles = column.getTilesInRange(minY, maxY);
