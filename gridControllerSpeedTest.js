@@ -15,7 +15,7 @@ function runTests(testName, testCallback) {
   }
   var endTime = new Date();
   var performance = (endTime - startTime) / numTests;
-  console.log(testName + ": " + performance + "ms/run");
+  console.log("   " + testName + ": " + performance + "ms/run");
   return performance
 }
 
@@ -119,64 +119,50 @@ function emptyLeftHalfCase(gridSize, entitiesPerTile) {
 function runAllTestCases(gridSize) {
   console.log('\n\nGrid size: ' + gridSize + ' =========================================');
   console.log('\nWORST CASES');
-  console.log('Worse case: 1 enemy per tile ---------');
+  console.log('Enemies per tile: 1 ---------');
   var setup = worstCase(gridSize, 1);
   runTestCaseSet(setup);
 
-  console.log('Worse case: 2 enemies per tile ---------');
+  console.log('Enemies per tile: 2 ---------');
   var setup = worstCase(gridSize, 2);
   runTestCaseSet(setup);
 
-  console.log('Worse case: 4 enemies per tile ---------');
+  console.log('Enemies per tile: 4 ---------');
   var setup = worstCase(gridSize, 4);
   runTestCaseSet(setup);
 
 
   console.log('\n\nSPORATIC CASES');
-  console.log('Sporatic case: 0.1 probability, 4 enemy per tile ---------');
+  console.log('Enemies per tile: 4, probability 0.1    ---------');
   var setup = sporaticCase(gridSize, 0.1, 4);
   runTestCaseSet(setup);
 
-  console.log('Sporatic case: 0.01 probability, 400 enemies per tile ---------');
+  console.log('Enemies per tile: 400, probability 0.01 ---------');
   var setup = sporaticCase(gridSize, 0.01, 400);
   runTestCaseSet(setup);
 
 
   console.log('\n\nEMPTY LEFT HALF CASES');
-  console.log('Empty left half case: 10 enemies per tile ---------');
+  console.log('Enemies per tile: 10   ---------');
   var setup = emptyLeftHalfCase(gridSize, 10);
   runTestCaseSet(setup);
 
 
   console.log('\n\nEMPTY LEFT HALF CASES');
-  console.log('Empty left half case: 100 enemies per tile ---------');
+  console.log('Enemies per tile: 100  ---------');
   var setup = emptyLeftHalfCase(gridSize, 100);
   runTestCaseSet(setup);
 
   console.log('\n\nEMPTY LEFT HALF CASES');
-  console.log('Empty left half case: 1000 enemies per tile ---------');
+  console.log('Enemies per tile: 1000 ---------');
   var setup = emptyLeftHalfCase(gridSize, 1000);
   runTestCaseSet(setup);
 }
 
 runAllTestCases(1);
 runAllTestCases(4);
+runAllTestCases(8);
+runAllTestCases(10);
 runAllTestCases(20);
 runAllTestCases(40);
-// runAllTestCases(49);
-// runAllTestCases(50);
-// runAllTestCases(51);
-// runAllTestCases(100);
-// runAllTestCases(101);
-// runAllTestCases(52);
-// runAllTestCases(53);
-// runAllTestCases(54);
-// runAllTestCases(55);
-runAllTestCases(80);
-runAllTestCases(160);
-// runAllTestCases(1);
-// runAllTestCases(2);
-// runAllTestCases(3);
-// runAllTestCases(4);
-// runAllTestCases(5);
-// runAllTestCases(6);
+runAllTestCases(50);

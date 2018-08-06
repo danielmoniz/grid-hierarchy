@@ -37,6 +37,9 @@ The purpose of the speed test script is to compare:
 
 Note that finding unique enemies is vastly less performant, but it's not always necessary. For example, if you simply need to pick the closest entity to a given coordinate, all you need is a list of non-unique entities. On the other hand, if you need to act on a set of nearby enemies, you'll want a unique list.
 
+Each test is run a number of times and averaged for greater accuracy.
+
+
 >### Test types
 >##### Worst cases
 Worst cases place some number of entities on every tile on the map. This removes the advantages the Grid has when there are entities in only some of the tiles.
