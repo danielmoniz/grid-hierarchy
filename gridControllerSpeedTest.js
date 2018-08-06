@@ -20,17 +20,19 @@ function runTests(testName, testCallback) {
 }
 
 function testCaseSet(grid, entities) {
-  runTests('full_iteration', function() {
-    blindLoop(entities);
-  })
+  var range = 20;
+  var position = { x: 20, y: 20 };
+  runTests('full iteration', function() {
+    blindLoop(entities, position, range);
+  });
 
   runTests('targetingTest grid', function() {
-    testGridTargeting(grid, { x: 20, y: 20 }, 20);
-  })
+    testGridTargeting(grid, position, range);
+  });
 
   runTests('hitTest grid', function() {
-    testGridHitting(grid, { x: 20, y: 20 }, 20);
-  })
+    testGridHitting(grid, position, range);
+  });
 }
 
 function runTestCaseSet(setup) {
@@ -38,11 +40,14 @@ function runTestCaseSet(setup) {
 }
 
 // a simple way to measure a bunch of checks against some entities
-function blindLoop(entities) {
-  var someNumber = 20;
+function blindLoop(entities, position, range) {
+  var selected = [];
   for (var i = 0; i < entities.length; i++) {
-    if (entities[i].x < someNumber && entities[i].y < someNumber) {
-      // do something, eg. add to array
+    var entity = entities[i];
+    if (entity.x >= position.x - range && entity.x <= position.x + range &&
+    entity.y >= position.y - range && entity.y <= position.y + range) {
+      // do some work, eg. add to array
+      selected.push(entity);
     }
   }
 }
@@ -50,13 +55,13 @@ function blindLoop(entities) {
 // Does not require unique entities (unlike hitting)
 function testGridTargeting(grid, location, width) {
   var entities = grid.getByArea(location.x, location.y, width, width);
-  blindLoop(entities);
+  blindLoop(entities, location, width);
 }
 
 // Requires unique entities (unlike targeting)
 function testGridHitting(grid, location, width) {
   var entities = grid.getByAreaUnique(location.x, location.y, width, width);
-  blindLoop(entities);
+  blindLoop(entities, location, width);
 }
 
 function worstCase(gridSize, entitiesPerTile) {
@@ -159,6 +164,11 @@ function runAllTestCases(gridSize) {
   runTestCaseSet(setup);
 }
 
+console.log("\n\n---------");
+console.log("Map size for all tests:");
+console.log("  Width:", mapSize.width);
+console.log("  Height:", mapSize.height);
+console.log("---------");
 runAllTestCases(1);
 runAllTestCases(4);
 runAllTestCases(8);

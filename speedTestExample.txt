@@ -1,0 +1,349 @@
+
+---------
+Map size for all tests:
+  Width: 100
+  Height: 100
+---------
+
+
+Grid size: 1 =========================================
+
+WORST CASES
+Enemies per tile: 1 ---------
+   full iteration: 0.3ms/run
+   targetingTest grid: 1.2ms/run
+   hitTest grid: 0.9ms/run
+Enemies per tile: 2 ---------
+   full iteration: 0.8ms/run
+   targetingTest grid: 1.7ms/run
+   hitTest grid: 1.6ms/run
+Enemies per tile: 4 ---------
+   full iteration: 0.2ms/run
+   targetingTest grid: 3.7ms/run
+   hitTest grid: 3.4ms/run
+
+
+SPORATIC CASES
+Enemies per tile: 4, probability 0.1    ---------
+   full iteration: 0ms/run
+   targetingTest grid: 0.1ms/run
+   hitTest grid: 0.3ms/run
+Enemies per tile: 400, probability 0.01 ---------
+   full iteration: 0.2ms/run
+   targetingTest grid: 1ms/run
+   hitTest grid: 1.3ms/run
+
+
+EMPTY LEFT HALF CASES
+Enemies per tile: 10   ---------
+   full iteration: 0.2ms/run
+   targetingTest grid: 0ms/run
+   hitTest grid: 0ms/run
+
+
+EMPTY LEFT HALF CASES
+Enemies per tile: 100  ---------
+   full iteration: 2ms/run
+   targetingTest grid: 0ms/run
+   hitTest grid: 0ms/run
+
+
+EMPTY LEFT HALF CASES
+Enemies per tile: 1000 ---------
+   full iteration: 22.3ms/run
+   targetingTest grid: 0ms/run
+   hitTest grid: 0ms/run
+
+
+Grid size: 4 =========================================
+
+WORST CASES
+Enemies per tile: 1 ---------
+   full iteration: 0ms/run
+   targetingTest grid: 0.1ms/run
+   hitTest grid: 0.2ms/run
+Enemies per tile: 2 ---------
+   full iteration: 0ms/run
+   targetingTest grid: 0ms/run
+   hitTest grid: 1.2ms/run
+Enemies per tile: 4 ---------
+   full iteration: 0.2ms/run
+   targetingTest grid: 0.1ms/run
+   hitTest grid: 1.2ms/run
+
+
+SPORATIC CASES
+Enemies per tile: 4, probability 0.1    ---------
+   full iteration: 0ms/run
+   targetingTest grid: 0ms/run
+   hitTest grid: 0.1ms/run
+Enemies per tile: 400, probability 0.01 ---------
+   full iteration: 0.2ms/run
+   targetingTest grid: 0.1ms/run
+   hitTest grid: 0.7ms/run
+
+
+EMPTY LEFT HALF CASES
+Enemies per tile: 10   ---------
+   full iteration: 0.1ms/run
+   targetingTest grid: 0ms/run
+   hitTest grid: 0ms/run
+
+
+EMPTY LEFT HALF CASES
+Enemies per tile: 100  ---------
+   full iteration: 1.8ms/run
+   targetingTest grid: 0ms/run
+   hitTest grid: 0ms/run
+
+
+EMPTY LEFT HALF CASES
+Enemies per tile: 1000 ---------
+   full iteration: 21.3ms/run
+   targetingTest grid: 0ms/run
+   hitTest grid: 0ms/run
+
+
+Grid size: 8 =========================================
+
+WORST CASES
+Enemies per tile: 1 ---------
+   full iteration: 0.1ms/run
+   targetingTest grid: 0ms/run
+   hitTest grid: 0.2ms/run
+Enemies per tile: 2 ---------
+   full iteration: 0.4ms/run
+   targetingTest grid: 0.1ms/run
+   hitTest grid: 0.5ms/run
+Enemies per tile: 4 ---------
+   full iteration: 0.1ms/run
+   targetingTest grid: 0.2ms/run
+   hitTest grid: 1ms/run
+
+
+SPORATIC CASES
+Enemies per tile: 4, probability 0.1    ---------
+   full iteration: 0ms/run
+   targetingTest grid: 0ms/run
+   hitTest grid: 0.1ms/run
+Enemies per tile: 400, probability 0.01 ---------
+   full iteration: 0.1ms/run
+   targetingTest grid: 0.1ms/run
+   hitTest grid: 1.1ms/run
+
+
+EMPTY LEFT HALF CASES
+Enemies per tile: 10   ---------
+   full iteration: 0.2ms/run
+   targetingTest grid: 0ms/run
+   hitTest grid: 0ms/run
+
+
+EMPTY LEFT HALF CASES
+Enemies per tile: 100  ---------
+   full iteration: 1.5ms/run
+   targetingTest grid: 0ms/run
+   hitTest grid: 0ms/run
+
+
+EMPTY LEFT HALF CASES
+Enemies per tile: 1000 ---------
+   full iteration: 21.6ms/run
+   targetingTest grid: 0ms/run
+   hitTest grid: 0ms/run
+
+
+Grid size: 10 =========================================
+
+WORST CASES
+Enemies per tile: 1 ---------
+   full iteration: 0ms/run
+   targetingTest grid: 0ms/run
+   hitTest grid: 0.4ms/run
+Enemies per tile: 2 ---------
+   full iteration: 0.1ms/run
+   targetingTest grid: 0ms/run
+   hitTest grid: 0.9ms/run
+Enemies per tile: 4 ---------
+   full iteration: 0.2ms/run
+   targetingTest grid: 0.1ms/run
+   hitTest grid: 1ms/run
+
+
+SPORATIC CASES
+Enemies per tile: 4, probability 0.1    ---------
+   full iteration: 0.1ms/run
+   targetingTest grid: 0ms/run
+   hitTest grid: 0.1ms/run
+Enemies per tile: 400, probability 0.01 ---------
+   full iteration: 0.1ms/run
+   targetingTest grid: 0.1ms/run
+   hitTest grid: 0.9ms/run
+
+
+EMPTY LEFT HALF CASES
+Enemies per tile: 10   ---------
+   full iteration: 0.1ms/run
+   targetingTest grid: 0ms/run
+   hitTest grid: 0ms/run
+
+
+EMPTY LEFT HALF CASES
+Enemies per tile: 100  ---------
+   full iteration: 1.5ms/run
+   targetingTest grid: 0ms/run
+   hitTest grid: 0ms/run
+
+
+EMPTY LEFT HALF CASES
+Enemies per tile: 1000 ---------
+   full iteration: 21.4ms/run
+   targetingTest grid: 0ms/run
+   hitTest grid: 0ms/run
+
+
+Grid size: 20 =========================================
+
+WORST CASES
+Enemies per tile: 1 ---------
+   full iteration: 0.1ms/run
+   targetingTest grid: 0ms/run
+   hitTest grid: 0.6ms/run
+Enemies per tile: 2 ---------
+   full iteration: 0.1ms/run
+   targetingTest grid: 0ms/run
+   hitTest grid: 0.7ms/run
+Enemies per tile: 4 ---------
+   full iteration: 0.1ms/run
+   targetingTest grid: 0.1ms/run
+   hitTest grid: 1.7ms/run
+
+
+SPORATIC CASES
+Enemies per tile: 4, probability 0.1    ---------
+   full iteration: 0ms/run
+   targetingTest grid: 0ms/run
+   hitTest grid: 0.2ms/run
+Enemies per tile: 400, probability 0.01 ---------
+   full iteration: 0.2ms/run
+   targetingTest grid: 0ms/run
+   hitTest grid: 1.7ms/run
+
+
+EMPTY LEFT HALF CASES
+Enemies per tile: 10   ---------
+   full iteration: 0.1ms/run
+   targetingTest grid: 0ms/run
+   hitTest grid: 0.9ms/run
+
+
+EMPTY LEFT HALF CASES
+Enemies per tile: 100  ---------
+   full iteration: 1.9ms/run
+   targetingTest grid: 0.3ms/run
+   hitTest grid: 13.5ms/run
+
+
+EMPTY LEFT HALF CASES
+Enemies per tile: 1000 ---------
+   full iteration: 21.2ms/run
+   targetingTest grid: 17.8ms/run
+   hitTest grid: 198ms/run
+
+
+Grid size: 40 =========================================
+
+WORST CASES
+Enemies per tile: 1 ---------
+   full iteration: 0ms/run
+   targetingTest grid: 0.1ms/run
+   hitTest grid: 1.6ms/run
+Enemies per tile: 2 ---------
+   full iteration: 0.1ms/run
+   targetingTest grid: 0.2ms/run
+   hitTest grid: 3.6ms/run
+Enemies per tile: 4 ---------
+   full iteration: 0.2ms/run
+   targetingTest grid: 0.3ms/run
+   hitTest grid: 7.4ms/run
+
+
+SPORATIC CASES
+Enemies per tile: 4, probability 0.1    ---------
+   full iteration: 0.1ms/run
+   targetingTest grid: 0ms/run
+   hitTest grid: 0.6ms/run
+Enemies per tile: 400, probability 0.01 ---------
+   full iteration: 0.1ms/run
+   targetingTest grid: 0.3ms/run
+   hitTest grid: 7.4ms/run
+
+
+EMPTY LEFT HALF CASES
+Enemies per tile: 10   ---------
+   full iteration: 0.1ms/run
+   targetingTest grid: 0.1ms/run
+   hitTest grid: 7.8ms/run
+
+
+EMPTY LEFT HALF CASES
+Enemies per tile: 100  ---------
+   full iteration: 1.3ms/run
+   targetingTest grid: 2.7ms/run
+   hitTest grid: 101.9ms/run
+
+
+EMPTY LEFT HALF CASES
+Enemies per tile: 1000 ---------
+   full iteration: 21.3ms/run
+   targetingTest grid: 58.7ms/run
+   hitTest grid: 1853.7ms/run
+
+
+Grid size: 50 =========================================
+
+WORST CASES
+Enemies per tile: 1 ---------
+   full iteration: 0.1ms/run
+   targetingTest grid: 0ms/run
+   hitTest grid: 0.7ms/run
+Enemies per tile: 2 ---------
+   full iteration: 0ms/run
+   targetingTest grid: 0.1ms/run
+   hitTest grid: 1.4ms/run
+Enemies per tile: 4 ---------
+   full iteration: 0.2ms/run
+   targetingTest grid: 0ms/run
+   hitTest grid: 2.9ms/run
+
+
+SPORATIC CASES
+Enemies per tile: 4, probability 0.1    ---------
+   full iteration: 0ms/run
+   targetingTest grid: 0ms/run
+   hitTest grid: 0.4ms/run
+Enemies per tile: 400, probability 0.01 ---------
+   full iteration: 0.1ms/run
+   targetingTest grid: 0ms/run
+   hitTest grid: 2.9ms/run
+
+
+EMPTY LEFT HALF CASES
+Enemies per tile: 10   ---------
+   full iteration: 0.2ms/run
+   targetingTest grid: 0ms/run
+   hitTest grid: 0ms/run
+
+
+EMPTY LEFT HALF CASES
+Enemies per tile: 100  ---------
+   full iteration: 1.5ms/run
+   targetingTest grid: 0ms/run
+   hitTest grid: 0ms/run
+
+
+EMPTY LEFT HALF CASES
+Enemies per tile: 1000 ---------
+   full iteration: 23.5ms/run
+   targetingTest grid: 0ms/run
+   hitTest grid: 0ms/run

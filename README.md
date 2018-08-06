@@ -31,14 +31,15 @@ To run the speed tests:
     node gridControllerSpeedTest.js
 
 The purpose of the speed test script is to compare:
-* iterating over every entity
-* using the Grid to find a set of entities
-* using the Grid to find a set of *unique* entities
+* iterating over every entity ("full iteration")
+* using the Grid to find a set of entities ("targeting test")
+* using the Grid to find a set of *unique* entities ("hit test")
 
 Note that finding unique enemies is vastly less performant, but it's not always necessary. For example, if you simply need to pick the closest entity to a given coordinate, all you need is a list of non-unique entities. On the other hand, if you need to act on a set of nearby enemies, you'll want a unique list.
 
 Each test is run a number of times and averaged for greater accuracy.
 
+The tests are broken down into sections for various grid sizes. The chosen grid size is important and will vary depending on the size of your map/board and your needs. Out of the
 
 >### Test types
 >##### Worst cases
@@ -49,3 +50,5 @@ Here we place some number of entities on only some of the tiles by using random 
 >
 >##### Empty Left Half cases
 Entities are placed on only the right half of the map. The testing is performed from a coordinate on the left half. This means that there is an empty space around the coordinate, and the algorithm therefore gets to skip entire columns before return zero (or few) results.
+
+[Click here to see example output](speedTestExample.txt) from the speed tests.
