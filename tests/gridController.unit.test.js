@@ -136,7 +136,9 @@ describe('GridController', function() {
       var entities = grid.getByAreaCorners(3, 3, 13, 13);
       expect(entities.length).toBe(5);
     })
+  })
 
+  describe('getByAreaCornersUnique', function() {
     it('should avoid returning duplicate entities from multiple tiles', function() {
       var grid = new GridController(4);
       grid.add({ x: 0, y: 0, width: 5 }); // in 2 columns
@@ -149,7 +151,7 @@ describe('GridController', function() {
       expect(columns[1].tiles[0].data.length).toBe(3);
       expect(columns[2].tiles[0].data.length).toBe(2);
 
-      var entities = grid.getByAreaCorners(2, 3, 8, 9);
+      var entities = grid.getByAreaCornersUnique(2, 3, 8, 9);
       expect(entities.length).toBe(3);
     })
   })

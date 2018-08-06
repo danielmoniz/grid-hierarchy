@@ -55,10 +55,11 @@ module.exports.Grid = (function() {
   /*
    * Same as findEntitiesInArea, but ensures unique values.
    * This will be a significantly slower operation.
+   * NOTE: This uses ES2015. The goal was to build a library on ES5.
    */
   Grid.prototype.findUniqueEntitiesInArea = function(minX, minY, maxX, maxY) {
-    // @TODO remove duplicates from entities list
     var entities = this.findEntitiesInArea(minX, minY, maxX, maxY);
+    return [...new Set(entities)];
     return entities;
   }
 

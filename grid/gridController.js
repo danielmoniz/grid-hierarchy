@@ -55,6 +55,15 @@ module.exports.GridController = (function() {
     return this.grid.findEntitiesInArea(minX, minY, maxX, maxY);
   }
 
+  /*
+   * Return entities in a given area.
+   * Must pass a minimum (x, y) and a max (x, y) to define the area.
+   */
+  GridController.prototype.getByAreaCornersUnique = function(trueMinX, trueMinY, trueMaxX, trueMaxY) {
+    var entities = this.getByAreaCorners(trueMinX, trueMinY, trueMaxX, trueMaxY)
+    return [...new Set(entities)];
+  }
+
   GridController.prototype.getGridValue = function(actualX) {
     return Math.floor(actualX / this.gridSize);
   }
