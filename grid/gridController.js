@@ -43,6 +43,14 @@ module.exports.GridController = (function() {
   }
 
   /*
+   * Same as getByArea, but provides only unique values.
+   */
+  GridController.prototype.getByAreaUnique = function(x, y, width, height) {
+    var entities = this.getByArea(x, y, width, height);
+    return [...new Set(entities)];
+  }
+
+  /*
    * Return entities in a given area.
    * Must pass a minimum (x, y) and a max (x, y) to define the area.
    */
