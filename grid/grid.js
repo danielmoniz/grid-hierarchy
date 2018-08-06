@@ -35,6 +35,12 @@ module.exports.Grid = (function() {
     return allColumns;
   }
 
+  /*
+   * Returns a list of entities in an area.
+   * NOTE: Does not guarantee uniqueness
+   * NOTE: Does not guarantee that the enemies even intersect with the area.
+   *   It will, however, return only enemies from tiles that intersect.
+   */
   Grid.prototype.findEntitiesInArea = function(minX, minY, maxX, maxY) {
     var columns = this.findColumns(minX, maxX);
     var tiles = [];
@@ -47,12 +53,22 @@ module.exports.Grid = (function() {
   }
 
   /*
+   * Same as findEntitiesInArea, but ensures unique values.
+   * This will be a significantly slower operation.
+   */
+  Grid.prototype.findUniqueEntitiesInArea = function(minX, minY, maxX, maxY) {
+    // @TODO remove duplicates from entities list
+    var entities = this.findEntitiesInArea(minX, minY, maxX, maxY);
+    return entities;
+  }
+
+  /*
    * Returns the combined data from a set of tiles.
    */
   Grid.prototype.getEntitiesFromTiles = function(tiles) {
     var allEntities = [];
     tiles.forEach(function(tile) {
-      allEntities = union(allEntities, tile.data);
+      allEntities = allEntities.concat(tile.data);
     });
     return allEntities;
   }
@@ -97,17 +113,6 @@ module.exports.Grid = (function() {
         return column;
       }
     }
-  }
-
-  /*
-   * NOTE: This runs in O(m * n) and could very well be a future bottleneck.
-   * If ES6 were being used in this library, it could likely be done with a Map to reduce it to O(m + n).
-   */
-  function union(array1, array2) {
-    var newArray = array1.concat(array2);
-    return newArray.filter(function(element, index) {
-      return index === newArray.indexOf(element)
-    });
   }
 
   return Grid;

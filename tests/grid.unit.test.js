@@ -95,7 +95,7 @@ describe('Grid', function() {
     it('should return only entities with a given area', function() {
       var grid = new Grid(4);
       grid.add({ name: 'One' }, 2, 3);
-      grid.add({ name: 'Two' }, 3, 3, 5, 5); // partially inside
+      grid.add({ name: 'Two' }, 3, 3); // partially inside
       grid.add({ name: 'Three' }, 3, 4);
       grid.add({ name: 'Four' }, 4, 4); // outside
 
@@ -106,12 +106,37 @@ describe('Grid', function() {
       expect(entities[2].name).toBe('Three');
     })
 
+    it('should return duplicate entities if entities have width/height', function() {
+      var grid = new Grid(4);
+      grid.add({ name: 'One' }, 2, 2, 4, 4); // makes a 3x3 square
+
+      var entities = grid.findEntitiesInArea(2, 2, 4, 4);
+      expect(entities.length).toBe(9);
+    })
+
+    it('should return duplicate entities with a given area', function() {
+      var grid = new Grid(4);
+      grid.add({ name: 'One' }, 2, 2);
+      grid.add({ name: 'Two' }, 3, 3, 5, 5); // multiple tiles inside
+      grid.add({ name: 'Three' }, 3, 3);
+      grid.add({ name: 'Four' }, 4, 4); // outside area
+
+      var entities = grid.findEntitiesInArea(2, 2, 3, 4);
+      expect(entities.length).toBe(4);
+      expect(entities[0].name).toBe('One');
+      expect(entities[1].name).toBe('Two');
+      expect(entities[2].name).toBe('Three');
+      expect(entities[3].name).toBe('Two'); // duplicate
+    })
+  })
+
+  describe('findUniqueEntitiesInArea', function() {
     it('should not return duplicate entities with a given area', function() {
       var grid = new Grid(4);
       grid.add({}, 2, 3, 4, 5); // in multiple tiles
       grid.add({}, 3, 3);
 
-      var entities = grid.findEntitiesInArea(2, 3, 4, 5);
+      var entities = grid.findUniqueEntitiesInArea(2, 3, 4, 5);
       expect(entities.length).toBe(2);
     })
   })
