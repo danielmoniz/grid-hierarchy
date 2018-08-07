@@ -1,7 +1,7 @@
 {
-  "name": "grid-hierarchy",
+  "name": "grid-master",
   "version": "1.0.0",
-  "description": "A grid hierarchy implementation for JS",
+  "description": "A grid-based implementation for JS for efficient querying of entities",
   "main": "index.js",
   "directories": {
     "test": "tests"
@@ -12,7 +12,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/danielmoniz/grid-hierarchy.git"
+    "url": "https://github.com/danielmoniz/grid-master.git"
   },
   "jest": {
     "moduleDirectories": [
@@ -23,12 +23,13 @@
   },
   "keywords": [
     "grid",
-    "grid hierarchy"
+    "grid-master",
+    "efficient"
   ],
   "author": "Daniel Moniz",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/danielmoniz/grid-hierarchy/issues"
+    "url": "https://github.com/danielmoniz/grid-master/issues"
   },
   "devDependencies": {
     "jest": "^23.4.2"
