@@ -75,11 +75,11 @@ module.exports.Grid = (function() {
   }
 
   /*
-   * Adds an entity to one or more tiles in the grid.
+   * Inserts an entity to one or more tiles in the grid.
    * Note that entities need not have a width or height.
    * @TODO Ensure entities that are 3 columns wide or tall get added to all tiles (currently only being added to max four tiles).
    */
-  Grid.prototype.add = function(entity, minX, minY, maxX, maxY) {
+  Grid.prototype.insert = function(entity, minX, minY, maxX, maxY) {
     if (maxX === undefined) { maxX = minX }
     if (maxY === undefined) { maxY = minY }
     // add entity to every intersecting tile

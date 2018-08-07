@@ -16,7 +16,7 @@ module.exports.GridController = (function() {
    * Note that entities need not have a width or height.
    * @TODO Ensure entities that are 3 columns wide or tall get added to all tiles (currently only being added to max four tiles).
    */
-  GridController.prototype.add = function(entity) {
+  GridController.prototype.insert = function(entity) {
     var columnX = this.getGridValue(entity.x);
     var rowY = this.getGridValue(entity.y);
     var width = entity.width || 0;
@@ -24,7 +24,7 @@ module.exports.GridController = (function() {
     var widthColumnX = this.getGridValue(entity.x + width);
     var heightRowY = this.getGridValue(entity.y + height);
 
-    return this.grid.add(entity, columnX, rowY, widthColumnX, heightRowY);
+    return this.grid.insert(entity, columnX, rowY, widthColumnX, heightRowY);
   }
 
   GridController.prototype.getFromTile = function(x, y) {
