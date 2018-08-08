@@ -80,7 +80,7 @@ function worstCase(gridSize, entitiesPerTile) {
   return { grid: grid, entities: entities };
 }
 
-function sporaticCase(gridSize, probability, entitiesPerTile) {
+function sparseCase(gridSize, probability, entitiesPerTile) {
   var grid = new GridController(gridSize);
   var entities = [];
 
@@ -137,13 +137,13 @@ function runAllTestCases(gridSize) {
   runTestCaseSet(setup);
 
 
-  console.log('\n\nSPORATIC CASES');
+  console.log('\n\nSPARSE CASES');
   console.log('Enemies per tile: 4, probability 0.1    ---------');
-  var setup = sporaticCase(gridSize, 0.1, 4);
+  var setup = sparseCase(gridSize, 0.1, 4);
   runTestCaseSet(setup);
 
   console.log('Enemies per tile: 400, probability 0.01 ---------');
-  var setup = sporaticCase(gridSize, 0.01, 400);
+  var setup = sparseCase(gridSize, 0.01, 400);
   runTestCaseSet(setup);
 
 

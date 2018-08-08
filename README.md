@@ -45,7 +45,7 @@ The tests are broken down into sections for various grid sizes. The chosen grid 
 >##### Worst cases
 Worst cases place some number of entities on every tile on the map. This removes the advantages the Grid has when there are entities in only some of the tiles.
 >
->##### Sporatic cases
+>##### Sparse cases
 Here we place some number of entities on only some of the tiles by using random numbers. This accounts for the cases where entities are grouped up into specific tiles and are not evenly distributed.
 >
 >##### Empty Left Half cases

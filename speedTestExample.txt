@@ -23,7 +23,7 @@ Enemies per tile: 4 ---------
    hitTest grid: 3.4ms/run
 
 
-SPORATIC CASES
+SPARSE CASES
 Enemies per tile: 4, probability 0.1    ---------
    full iteration: 0ms/run
    targetingTest grid: 0.1ms/run
@@ -72,7 +72,7 @@ Enemies per tile: 4 ---------
    hitTest grid: 1.2ms/run
 
 
-SPORATIC CASES
+SPARSE CASES
 Enemies per tile: 4, probability 0.1    ---------
    full iteration: 0ms/run
    targetingTest grid: 0ms/run
@@ -121,7 +121,7 @@ Enemies per tile: 4 ---------
    hitTest grid: 1ms/run
 
 
-SPORATIC CASES
+SPARSE CASES
 Enemies per tile: 4, probability 0.1    ---------
    full iteration: 0ms/run
    targetingTest grid: 0ms/run
@@ -170,7 +170,7 @@ Enemies per tile: 4 ---------
    hitTest grid: 1ms/run
 
 
-SPORATIC CASES
+SPARSE CASES
 Enemies per tile: 4, probability 0.1    ---------
    full iteration: 0.1ms/run
    targetingTest grid: 0ms/run
@@ -219,7 +219,7 @@ Enemies per tile: 4 ---------
    hitTest grid: 1.7ms/run
 
 
-SPORATIC CASES
+SPARSE CASES
 Enemies per tile: 4, probability 0.1    ---------
    full iteration: 0ms/run
    targetingTest grid: 0ms/run
@@ -268,7 +268,7 @@ Enemies per tile: 4 ---------
    hitTest grid: 7.4ms/run
 
 
-SPORATIC CASES
+SPARSE CASES
 Enemies per tile: 4, probability 0.1    ---------
    full iteration: 0.1ms/run
    targetingTest grid: 0ms/run
@@ -317,7 +317,7 @@ Enemies per tile: 4 ---------
    hitTest grid: 2.9ms/run
 
 
-SPORATIC CASES
+SPARSE CASES
 Enemies per tile: 4, probability 0.1    ---------
    full iteration: 0ms/run
    targetingTest grid: 0ms/run
