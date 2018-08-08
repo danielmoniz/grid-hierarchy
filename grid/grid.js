@@ -1,11 +1,13 @@
 
 var Column = require('./column').Column;
+var LinkedList = require('linked-list');
 
 // @TODO Use LinkedList instead of array. Splicing items into an array is (surely?) be less efficient than inserting into a LinkedList, especially if iteration is already performed.
 
 module.exports.Grid = (function() {
   function Grid() {
-    this.columns = [];
+    // this.columns = [];
+    this.columns = new LinkedList;
   }
 
   /*
@@ -26,11 +28,22 @@ module.exports.Grid = (function() {
   Grid.prototype.findColumns = function(minX, maxX) {
     var allColumns = [];
 
-    for (var i = 0; i < this.columns.length; i++) {
-      var column = this.columns[i];
+    // for (var i = 0; i < this.columns.length; i++) {
+    //   var column = this.columns[i];
+    //   if (column.x > maxX) { break }
+    //   if (column.x < minX) { continue }
+    //   allColumns.push(column);
+    // }
+    // return allColumns;
+
+
+    var columnNode = this.columns.head;
+    while (columnNode) {
+      var column = columnNode.value;
       if (column.x > maxX) { break }
       if (column.x < minX) { continue }
       allColumns.push(column);
+      columnNode = columnNode.next;
     }
     return allColumns;
   }
@@ -44,6 +57,7 @@ module.exports.Grid = (function() {
   Grid.prototype.findEntitiesInArea = function(minX, minY, maxX, maxY) {
     var columns = this.findColumns(minX, maxX);
     var tiles = [];
+    var selected = new Map();
     columns.forEach(function(column) {
       var columnTiles = column.getTilesInRange(minY, maxY);
       tiles = tiles.concat(columnTiles);
@@ -94,6 +108,7 @@ module.exports.Grid = (function() {
 
   Grid.prototype.addEntity = function(entity, x, y) {
     var column = this.findOrAddColumn(x);
+    // console.log(column);
     column.addEntity(entity, y);
   }
 
@@ -101,19 +116,50 @@ module.exports.Grid = (function() {
    * Search for a column with a given x value. If not found, create it.
    * @NOTE: This code is essentially duplicated in Column.
    */
-   Grid.prototype.findOrAddColumn = function(x) {
+  Grid.prototype.findOrAddColumn = function(x) {
     // loop until column is found or is undefined
-    for (var i = 0; i < this.columns.length + 1; i++) {
-      var column = this.columns[i];
-      if (column === undefined || column.x > x) {
-        var newColumn = new Column(x);
-        // add column as previous item in array
-        this.columns.splice(i, 0, newColumn);
-        return newColumn;
-      } else if (column.x === x) {
+    var columnNode = this.columns.head;
+
+    while (true) {
+      if (columnNode !== null && columnNode.value.x < x) {
+        columnNode = columnNode.next;
+        continue;
+      } else if (columnNode !== null && columnNode.value.x === x) {
+        return columnNode.value;
+      }
+
+      var column = new Column(x);
+      var newNode = new LinkedList.Item();
+      newNode.value = column;
+      if (columnNode === null) {
+        this.columns.append(newNode);
+        return column;
+      }
+
+      // console.log(columnNode);
+      // return;
+      var column = columnNode.value;
+      if (column.x > x) {
+        columnNode.prepend(newNode);
         return column;
       }
     }
+
+
+
+
+    // loop until column is found or is undefined
+    // for (var i = 0; i < this.columns.length + 1; i++) {
+    //   var column = this.columns[i];
+    //   if (column === undefined || column.x > x) {
+    //     var newColumn = new Column(x);
+    //     // add column as previous item in array
+    //     this.columns.splice(i, 0, newColumn);
+    //     return newColumn;
+    //   } else if (column.x === x) {
+    //     return column;
+    //   }
+    // }
   }
 
   return Grid;

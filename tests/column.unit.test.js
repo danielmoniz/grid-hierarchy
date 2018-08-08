@@ -3,7 +3,7 @@
 var Grid = require('grid').Grid;
 var Column = require('column').Column;
 
-describe('Column', function() {
+describe.skip('Column', function() {
 
   describe('getTilesInRange', function() {
     it('should return a list of all tiles in a range within a column', function() {

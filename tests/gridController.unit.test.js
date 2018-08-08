@@ -1,7 +1,7 @@
 
 var GridController = require('gridController').GridController;
 
-describe('GridController', function() {
+describe.skip('GridController', function() {
   describe('add', function() {
     it('should add an entity to its location in the grid', function() {
       var grid = new GridController();
