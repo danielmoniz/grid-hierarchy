@@ -71,7 +71,7 @@ function worstCase(gridSize, entitiesPerTile) {
   for (var x = 0; x < mapSize.width; x++) {
     for (var y = 0; y < mapSize.height; y++) {
       for (var i = 0; i < entitiesPerTile; i++) {
-        var entity = grid.add({ x: x, y: y });
+        var entity = grid.insert({ x: x, y: y });
         entities.push(entity);
       }
     }
@@ -88,7 +88,7 @@ function sporaticCase(gridSize, probability, entitiesPerTile) {
     for (var y = 0; y < mapSize.height; y++) {
       for (var i = 0; i < entitiesPerTile; i++) {
         if (Math.random() >= probability) { continue }
-        var entity = grid.add({ x: x, y: y });
+        var entity = grid.insert({ x: x, y: y });
         entities.push(entity);
       }
     }
@@ -104,7 +104,7 @@ function emptyLeftHalfCase(gridSize, entitiesPerTile) {
   for (var x = mapSize.width / 2; x < mapSize.width; x++) {
     for (var y = 0; y < mapSize.height; y++) {
       for (var i = 0; i < entitiesPerTile; i++) {
-        var entity = grid.add({ x: x, y: y });
+        var entity = grid.insert({ x: x, y: y });
         entities.push(entity);
       }
     }
