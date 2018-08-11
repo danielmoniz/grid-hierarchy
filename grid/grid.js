@@ -6,6 +6,7 @@ var Column = require('./column').Column;
 module.exports.Grid = (function() {
   function Grid() {
     this.columns = [];
+    this.overlap = [];
   }
 
   /*
@@ -49,7 +50,7 @@ module.exports.Grid = (function() {
       tiles = tiles.concat(columnTiles);
     }.bind(this));
 
-    return this.getEntitiesFromTiles(tiles);
+    return this.getEntitiesFromTiles(tiles).concat(this.overlap);
   }
 
   /*
@@ -59,6 +60,7 @@ module.exports.Grid = (function() {
    */
   Grid.prototype.findUniqueEntitiesInArea = function(minX, minY, maxX, maxY) {
     var entities = this.findEntitiesInArea(minX, minY, maxX, maxY);
+
     return [...new Set(entities)];
     return entities;
   }
@@ -82,6 +84,13 @@ module.exports.Grid = (function() {
   Grid.prototype.insert = function(entity, minX, minY, maxX, maxY) {
     if (maxX === undefined) { maxX = minX }
     if (maxY === undefined) { maxY = minY }
+
+    // add to special object if entity will overlap tiles
+    if (minX !== maxX || minY !== maxY) {
+      this.overlap.push(entity);
+      return entity;
+    }
+
     // add entity to every intersecting tile
     for (var x = minX; x <= maxX; x++) {
       for (var y = minY; y <= maxY; y++) {

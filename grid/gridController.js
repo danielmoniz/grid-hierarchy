@@ -46,8 +46,7 @@ module.exports.GridController = (function() {
    * Same as getByArea, but provides only unique values.
    */
   GridController.prototype.getByAreaUnique = function(x, y, width, height) {
-    var entities = this.getByArea(x, y, width, height);
-    return [...new Set(entities)];
+    return this.getByArea(x, y, width, height);
   }
 
   /*

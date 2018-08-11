@@ -35,37 +35,13 @@ describe('GridController', function() {
       expect(grid.getFromTile(0, 1)[0]).toBe(entity);
     })
 
-    it('should add an entity to multiple grid tiles if it overlaps with width and height', function() {
+    it('should not add an entity to any grid tiles if it overlaps with width and height', function() {
       var grid = new GridController(5);
       var entity = { x: 3, y: 3, width: 3, height: 3 };
       grid.insert(entity);
 
-      expect(grid.getFromTile(0, 0).length).toBe(1);
-      expect(grid.getFromTile(0, 0)[0]).toBe(entity);
-
-      expect(grid.getFromTile(1, 0).length).toBe(1);
-      expect(grid.getFromTile(1, 0)[0]).toBe(entity);
-
-      expect(grid.getFromTile(0, 1).length).toBe(1);
-      expect(grid.getFromTile(0, 1)[0]).toBe(entity);
-
-      expect(grid.getFromTile(1, 1).length).toBe(1);
-      expect(grid.getFromTile(1, 1)[0]).toBe(entity);
-    })
-
-    it('should add an entity to 3+ grid tiles if it is wide enough', function() {
-      var grid = new GridController(4);
-      var entity = { x: 3, y: 2, width: 6, height: 1 };
-      grid.insert(entity);
-
-      expect(grid.getFromTile(0, 0).length).toBe(1);
-      expect(grid.getFromTile(0, 0)[0]).toBe(entity);
-
-      expect(grid.getFromTile(1, 0).length).toBe(1);
-      expect(grid.getFromTile(1, 0)[0]).toBe(entity);
-
-      expect(grid.getFromTile(2, 0).length).toBe(1);
-      expect(grid.getFromTile(2, 0)[0]).toBe(entity);
+      expect(grid.grid.columns.length).toBe(0);
+      expect(grid.grid.overlap.length).toBe(1);
     })
   })
 
@@ -145,12 +121,6 @@ describe('GridController', function() {
       grid.insert({ x: 3, y: 0, width: 6 }); // in 3 columns
       grid.insert({ x: 6, y: 0, width: 3 }); // in 2 columns
 
-      var columns = grid.grid.columns;
-      expect(columns.length).toBe(3);
-      expect(columns[0].tiles[0].data.length).toBe(2);
-      expect(columns[1].tiles[0].data.length).toBe(3);
-      expect(columns[2].tiles[0].data.length).toBe(2);
-
       var entities = grid.getByAreaCornersUnique(2, 3, 8, 9);
       expect(entities.length).toBe(3);
     })
@@ -159,9 +129,9 @@ describe('GridController', function() {
   describe('clear', function() {
     it('should remove all columns from the grid', function() {
       var grid = new GridController(4);
-      grid.insert({ x: 0, y: 0, width: 5 }); // in 2 columns
-      grid.insert({ x: 3, y: 0, width: 6 }); // in 3 columns
-      grid.insert({ x: 6, y: 0, width: 3 }); // in 2 columns
+      grid.insert({ x: 0, y: 0, width: 1 });
+      grid.insert({ x: 5, y: 0, width: 0 });
+      grid.insert({ x: 9, y: 0, width: 1 });
       expect(grid.grid.columns.length).toBe(3);
 
       grid.clear();

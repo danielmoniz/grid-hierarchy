@@ -36,16 +36,13 @@ describe('Grid', function() {
       expect(grid.get(2, 3)[0].name).toBe('One');
     })
 
-    it('should add the entity to multiple tiles based on min-max coordinates', function() {
+    it('should add a large/overlapping entity to special collection', function() {
       var grid = new Grid(4);
-      grid.insert({}, 2, 3, 4, 5);
+      var item = grid.insert({}, 2, 3, 4, 5);
 
-      expect(grid.columns.length).toBe(3);
-      for (var x = 2; x <= 4; x++) {
-        for (var y = 3; y <= 5; y++) {
-          expect(grid.get(x, y).length).toBe(1);
-        }
-      }
+      expect(grid.columns.length).toBe(0);
+      expect(grid.overlap.length).toBe(1);
+      expect(grid.overlap).toContain(item);
     })
   })
 
@@ -106,27 +103,27 @@ describe('Grid', function() {
       expect(entities[2].name).toBe('Three');
     })
 
-    it('should return duplicate entities if entities have width/height', function() {
+    it('should return unique entities even when entities have width/height', function() {
       var grid = new Grid(4);
       grid.insert({ name: 'One' }, 2, 2, 4, 4); // makes a 3x3 square
 
       var entities = grid.findEntitiesInArea(2, 2, 4, 4);
-      expect(entities.length).toBe(9);
+      expect(entities.length).toBe(1);
     })
 
-    it('should return duplicate entities with a given area', function() {
+    it('should return unique entities with a given area', function() {
       var grid = new Grid(4);
-      grid.insert({ name: 'One' }, 2, 2);
-      grid.insert({ name: 'Two' }, 3, 3, 5, 5); // multiple tiles inside
-      grid.insert({ name: 'Three' }, 3, 3);
-      grid.insert({ name: 'Four' }, 4, 4); // outside area
+      var item1 = grid.insert({ name: 'One' }, 2, 2);
+      var item2 = grid.insert({ name: 'Two' }, 3, 3, 5, 5); // multiple tiles inside
+      var item3 = grid.insert({ name: 'Three' }, 3, 3);
+      var item4 = grid.insert({ name: 'Four' }, 4, 4); // outside area
 
       var entities = grid.findEntitiesInArea(2, 2, 3, 4);
-      expect(entities.length).toBe(4);
-      expect(entities[0].name).toBe('One');
-      expect(entities[1].name).toBe('Two');
-      expect(entities[2].name).toBe('Three');
-      expect(entities[3].name).toBe('Two'); // duplicate
+      expect(entities.length).toBe(3);
+      expect(entities).toContain(item1);
+      expect(entities).toContain(item2);
+      expect(entities).toContain(item3);
+      expect(entities).not.toContain(item4);
     })
   })
 

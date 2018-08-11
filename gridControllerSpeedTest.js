@@ -7,7 +7,7 @@ var mapSize = {
 };
 
 function runTests(testName, testCallback) {
-  var numTests = 10;
+  var numTests = 20;
   var startTime = new Date();
   for (var i = 0; i < numTests; i++) {
     var time =
